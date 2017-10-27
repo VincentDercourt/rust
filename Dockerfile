@@ -7,8 +7,8 @@ LABEL maintainer="pixel@happyguard.fr" \
 RUN apt-get update \
     && dpkg --add-architecture i386 \
     && apt-get update \
-    && apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip binutils bsdmainutils python util-linux ca-certificates tmux lib32gcc1 libstdc++6 libstdc++6:i386 expect sudo
-
+    && apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip binutils bsdmainutils python util-linux ca-certificates tmux lib32gcc1 libstdc++6 libstdc++6:i386 bc lib32z1 locales expect sudo
+    
 COPY ./*.* /
 
 RUN chmod 755 /start.sh \
@@ -16,13 +16,12 @@ RUN chmod 755 /start.sh \
     && useradd -ms /bin/bash rustserver \
     && echo "rustserver:rustserver" | chpasswd && adduser rustserver sudo \
     && usermod -G tty rustserver
+RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
 
 VOLUME /home/rustserver
 
 USER rustserver
-
-RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen && \
-    locale-gen
 
 ENV LANG fr_FR.UTF-8  
 ENV LANGUAGE fr_FR:fr  
