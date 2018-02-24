@@ -5,7 +5,7 @@ if [ ! -f "rustserver" ]; then
     chmod +x rustserver
 fi
 if [ ! -d "serverfiles" ]; then
-    yes Y | ./rustserver install
+    ./rustserver auto-install
     ./rustserver mods-install <<< "rustoxide
 y
 "

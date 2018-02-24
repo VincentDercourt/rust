@@ -1,34 +1,35 @@
-FROM debian:latest
+FROM gameservermanagers/linuxgsm-docker:latest
 
-LABEL maintainer="pixel@happyguard.fr" \
+LABEL maintainer="contact@vincentdercourt.fr" \
 	  version=1.0 \
-	  description="Create a server Rust"
+	  description="Create a server with gameservermanagers"
+
+USER root
+
+workdir /home/lgsm
+
+ENV serverName=rustserver
+ENV steamuser=anonymous
+ENV steampass=
+
+VOLUME /home/lgsm
+VOLUME /home/lgsm/lgsm/config-lgsm/rustserver #Contient les fichiers de configuration
+VOLUME /home/lgsm/serverfiles/oxide #Contient les fichier d'oxide (Inutile si oxide non installé)
+VOLUME /home/lgsm/serverfiles/server/rustserver #Contient les maps et bdds utilisateurs
 
 RUN apt-get update \
-    && dpkg --add-architecture i386 \
-    && apt-get update \
-    && apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip binutils bsdmainutils python util-linux ca-certificates tmux lib32gcc1 libstdc++6 libstdc++6:i386 bc lib32z1 locales expect sudo
-    
+    && apt-get install -y lib32z1 expect telnet sudo
+
 COPY ./*.* /
 
 RUN chmod 755 /start.sh \
-    && sed -i -e 's/\r$//' /start.sh \
-    && useradd -ms /bin/bash rustserver \
-    && echo "rustserver:rustserver" | chpasswd && adduser rustserver sudo \
-    && usermod -G tty rustserver
-RUN sed -i -e 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen && \
-    locale-gen
+    && sed -i -e 's/\r$//' /start.sh
 
-VOLUME /home/rustserver
+RUN echo 'lgsm  ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    && usermod -G tty lgsm
 
-USER rustserver
-
-ENV LANG fr_FR.UTF-8  
-ENV LANGUAGE fr_FR:fr  
-ENV LC_ALL fr_FR.UTF-8
-
-WORKDIR /home/rustserver
-
-EXPOSE 80 28015 28016 28015/udp 28016/udp
+USER lgsm    
+    
+EXPOSE 8080 28015 28016 28015/udp 28016/udp
 
 CMD ["/start.sh"]
