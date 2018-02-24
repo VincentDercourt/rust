@@ -12,9 +12,9 @@ ENV serverName=rustserver
 ENV steamuser=anonymous
 ENV steampass=
 
-RUN mkdir /home/lgsm/lgsm/config-lgsm/rustserver
-RUN mkdir /home/lgsm/serverfiles/oxide
-RUN mkdir /home/lgsm/serverfiles/server/rustserver
+RUN mkdir -p /home/lgsm/lgsm/config-lgsm/rustserver
+RUN mkdir -p /home/lgsm/serverfiles/oxide
+RUN mkdir -p /home/lgsm/serverfiles/server/rustserver
 
 VOLUME /home/lgsm
 VOLUME /home/lgsm/lgsm/config-lgsm/rustserver #Contient les fichiers de configuration
