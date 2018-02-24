@@ -18,7 +18,7 @@ RUN mkdir -p /home/lgsm/serverfiles/server/rustserver
 
 VOLUME /home/lgsm
 VOLUME /home/lgsm/lgsm/config-lgsm/rustserver #Contient les fichiers de configuration
-VOLUME /home/lgsm/serverfiles/oxide #Contient les fichier d'oxide (Inutile si oxide non installé)
+VOLUME /home/lgsm/serverfiles/oxide #Contient les fichiers oxide (Inutile si oxide non installé)
 VOLUME /home/lgsm/serverfiles/server/rustserver #Contient les maps et bdds utilisateurs
 
 RUN apt-get update \
