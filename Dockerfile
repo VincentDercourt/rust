@@ -17,9 +17,9 @@ RUN mkdir -p /home/lgsm/serverfiles/oxide
 RUN mkdir -p /home/lgsm/serverfiles/server/rustserver
 
 VOLUME /home/lgsm
-VOLUME /home/lgsm/lgsm/config-lgsm/rustserver #Contient les fichiers de configuration
-VOLUME /home/lgsm/serverfiles/oxide #Contient les fichiers oxide (Inutile si oxide non installé)
-VOLUME /home/lgsm/serverfiles/server/rustserver #Contient les maps et bdds utilisateurs
+VOLUME /home/lgsm/lgsm/config-lgsm/rustserver
+VOLUME /home/lgsm/serverfiles/oxide
+VOLUME /home/lgsm/serverfiles/server/rustserver
 
 RUN apt-get update \
     && apt-get install -y lib32z1 expect telnet sudo
